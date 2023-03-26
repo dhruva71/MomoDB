@@ -1,5 +1,7 @@
 use crate::datastore::datastore::DataStore;
 
+mod datastore;
+
 fn main() {
     let mut store = DataStore::new();
 
