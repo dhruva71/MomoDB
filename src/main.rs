@@ -1,12 +1,10 @@
-use crate::datastore::datastore::DataStore;
-
-mod datastore;
+use datastore::datastore::DataStore;
 
 fn main() {
     let mut store = DataStore::new();
 
     // Store a value
-    store.put("foo", "bar");
+    store.put("foo".to_string(), "bar".to_string());
     let value = store.get("foo").unwrap();
     println!("Value of foo: {}", value);
     store.delete("foo");
