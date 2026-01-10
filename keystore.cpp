@@ -11,7 +11,9 @@ keystore::keystore(WaLogger &logger) : logger(logger) {
     logger.addLogEntry(OpType::Internal, "keystore", "created");
 }
 
-keystore::~keystore() = default;
+keystore::~keystore() {
+    logger.addLogEntry(OpType::Delete, "keystore", "deleted");
+}
 
 int keystore::put(std::string key, std::string value) {
     logger.addLogEntry(OpType::Put, key, value);
