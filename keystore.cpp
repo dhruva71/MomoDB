@@ -12,6 +12,7 @@ keystore::keystore(WaLogger &logger) : logger(logger) {
 }
 
 keystore::~keystore() {
+    store.clear();
     logger.addLogEntry(OpType::Delete, "keystore", "deleted");
 }
 
