@@ -8,7 +8,7 @@
 #include <iostream>
 
 WaLogger::WaLogger() {
-    logEntries = std::vector<LogEntry>();
+    // logEntries = std::vector<LogEntry>();
     logEntries.push_back(std::move(LogEntry(OpType::Internal, "Created", "WaLogger")));
 }
 
@@ -30,7 +30,9 @@ int WaLogger::loadLogFile(const std::string &logFilePath) {
     while (!fileStream.eof()) {
         std::string line;
         std::getline(fileStream, line);
-        logEntries.push_back(std::move(LogEntry(line)));
+        if (!line.empty()) {
+            logEntries.push_back(std::move(LogEntry(line)));
+        }
     }
     fileStream.close();
 

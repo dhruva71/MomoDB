@@ -6,4 +6,6 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(momoDB main.cpp
         walogger.h
         logentry.h
-        walogger.cpp)
+        walogger.cpp
+        keystore.cpp
+        keystore.h)

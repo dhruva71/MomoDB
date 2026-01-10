@@ -15,7 +15,8 @@
 enum class OpType : uint8_t {
     Internal = 0,
     Put      = 1,
-    Delete   = 2
+    Delete   = 2,
+    Get      = 3,
 };
 
 constexpr OpType toOpType(const uint8_t v) {
@@ -23,6 +24,7 @@ constexpr OpType toOpType(const uint8_t v) {
         case 0: return OpType::Internal;
         case 1: return OpType::Put;
         case 2: return OpType::Delete;
+        case 3: return OpType::Get;
         default: throw std::runtime_error("Invalid OpType");
     }
 }
