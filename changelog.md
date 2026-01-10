@@ -3,3 +3,4 @@
 * Working on loading logs correctly.
 * Logs are currently human readable for easier debugging, but will eventually be made binary to improve performance.
 * Added flushing while writing log file
+* Added basic store using map

@@ -1,14 +1,18 @@
 #include <iostream>
+
+#include "keystore.h"
 #include "walogger.h"
 int main() {
     std::cout << "Starting momoDB" << std::endl;
 
     WaLogger logger = WaLogger();
     logger.loadLogFile("./sample.log");
+    keystore keystore(logger);
 
-    logger.addLogEntry(OpType::Put, "userid", "42");
-    logger.addLogEntry(OpType::Put, "userpassword", "secret password");
-    logger.addLogEntry(OpType::Delete, "userid", "42");
+    keystore.put("secret", "42");
+    auto value = keystore.get("secret");
+    std::cout << value << std::endl;
+    keystore.del("secret");
 
     logger.printLog();
     logger.saveLogFile();
