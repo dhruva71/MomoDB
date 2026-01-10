@@ -8,6 +8,7 @@ int main() {
 
     logger.addLogEntry(OpType::Put, "userid", "42");
     logger.addLogEntry(OpType::Put, "userpassword", "secret password");
+    logger.addLogEntry(OpType::Delete, "userid", "42");
 
     logger.printLog();
     logger.saveLogFile();

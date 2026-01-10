@@ -35,8 +35,8 @@ int WaLogger::loadLogFile(const std::string &logFilePath) {
     fileStream.close();
 
     // display log entries
-    for (auto &entry : logEntries) {
-        std::cout<<entry.toString()<<std::endl;
+    for (auto &entry: logEntries) {
+        std::cout << entry.toString() << std::endl;
     }
 
     return 0;
@@ -47,11 +47,11 @@ void WaLogger::saveLogFile() const {
     if (!fileStream.is_open()) {
         std::cerr << "Error opening log file " << logFileName << std::endl;
     }
-    for (auto &entry : logEntries) {
+    for (auto &entry: logEntries) {
         fileStream << entry.toString() << std::endl;
     }
     fileStream.close();
-    std::cout<<"Saved log file"<<std::endl;
+    std::cout << "Saved log file" << std::endl;
 }
 
 void WaLogger::saveLogFile(const std::string &logFilePath) {
@@ -65,17 +65,18 @@ void WaLogger::saveLogFile(const std::string &logFilePath) {
     if (!fileStream.is_open()) {
         std::cerr << "Error opening log file " << logFilePath << std::endl;
     }
-    for (auto &entry : logEntries) {
-        fileStream << entry.toString() << std::endl;
+    for (auto &entry: logEntries) {
+        fileStream << std::endl << entry.toString();
+        fileStream.flush(); // send to OS and write ASAP
     }
     fileStream.close();
-    std::cout<<"Saved log file"<<std::endl;
+    std::cout << "Saved log file" << std::endl;
 }
 
 void WaLogger::printLog() const {
-    std::cout<<"Printing log entries from memory:"<<std::endl;
-    for (auto &entry : logEntries) {
-        std::cout<<entry.toString()<<std::endl;
+    std::cout << "Printing log entries from memory:" << std::endl;
+    for (auto &entry: logEntries) {
+        std::cout << entry.toString() << std::endl;
     }
 }
 
