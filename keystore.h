@@ -20,6 +20,8 @@ public:
     int put(std::string key, std::string value);
     std::string get(const std::string &key);
     int del(const std::string& key);
+
+    void printKeystore();
 };
 
 

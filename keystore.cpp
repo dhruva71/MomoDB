@@ -28,8 +28,16 @@ std::string keystore::get(const std::string &key) {
     return value;
 }
 
-int keystore::del(const std::string& key) {
+int keystore::del(const std::string &key) {
     auto value = store.at(key);
     logger.addLogEntry(OpType::Delete, key, value);
     return store.erase(key);
+}
+
+void keystore::printKeystore() {
+    std::cout << "\n Printing keystore:" << std::endl;
+    for (const auto &[key, value]: store) {
+        auto display_string = std::format("{}:{}", key, value);
+        std::cout << display_string << std::endl;
+    }
 }
