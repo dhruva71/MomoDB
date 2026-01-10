@@ -22,6 +22,7 @@ public:
     int del(const std::string& key);
 
     void printKeystore();
+    int rebuildFromLog();
 };
 
 

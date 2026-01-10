@@ -21,6 +21,7 @@ public:
     void saveLogFile(const std::string &logFilePath);
     void printLog() const;
     int addLogEntry(OpType optype, const std::string &key, const std::string &value);
+    std::vector<LogEntry> getLogEntries();
 };
 
 #endif //MOMODB_WALOGGER_H

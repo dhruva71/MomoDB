@@ -87,3 +87,7 @@ int WaLogger::addLogEntry(OpType optype, const std::string &key, const std::stri
     logEntries.push_back(log_entry);
     return 0;
 }
+
+std::vector<LogEntry> WaLogger::getLogEntries() {
+    return logEntries;
+}

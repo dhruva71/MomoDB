@@ -44,3 +44,26 @@ void keystore::printKeystore() {
         std::cout << display_string << std::endl;
     }
 }
+
+int keystore::rebuildFromLog() {
+    auto logEntries = logger.getLogEntries();
+    for (const auto &entry: logEntries) {
+        auto optype = entry.optype;
+        switch (optype) {
+            case OpType::Put: {
+                auto key = entry.key;
+                auto value = entry.value;
+                store.insert({key, value});
+                break;
+            }
+            case OpType::Internal:
+                break;
+            case OpType::Delete:
+                store.erase(entry.key);
+                break;
+            case OpType::Get:
+                break;
+        }
+    }
+    return 0;
+}

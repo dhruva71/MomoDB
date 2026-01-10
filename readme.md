@@ -8,9 +8,11 @@ Built in C++. This is making use of C++20 features, so you will need a modern co
 build system.
 
 ## Current capabilities
-Reading and writing to log files successfully.
-Storage using map.
-Performance improvements can be made to both.
+* Reading and writing to log files successfully.
+* Storage using map.
+* Rebuilding map based on log file.
+* Performance improvements can be made to both.
+* Large scale tests are pending.
 
 ## Log format
 For human readability and easier debugging, logs are plain-text only for now. They will be moved to a binary format once
