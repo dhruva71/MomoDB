@@ -14,7 +14,7 @@ build system.
 * Added basic TCP server
   * Listens to port 9001 (hardcoded currently)
     * You can find processes using 9001 already using `sudo ss -tulnp | grep :9001`
-  * Currently can accept commands and responds with `OK`
+  * Currently, can accept commands and responds with `OK`
   * `EXIT` command works to shut down the server
   * Can be tested locally using `nc localhost 9001`
 * Performance improvements can be made to both.
