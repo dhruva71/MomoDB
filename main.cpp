@@ -2,11 +2,11 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <algorithm>
 
 #include "keystore.h"
 #include "walogger.h"
 
+// TODO explore not hardcoding this
 constexpr int PORT = 9001;
 constexpr int MAX_CONNECTIONS = 5;
 
@@ -53,7 +53,12 @@ int main() {
 
                 std::string response = "OK";
                 send(client_socket, response.data(), response.length(), 0);
+
+                // command processing
+                // TODO abstract this away
+                // TODO check if exit should possibly check for other open sockets as well
                 if (view == command_exit) {
+                    std::cout << "Received exit command; shutting down." << std::endl;
                     close(client_socket);
                     break;
                 }

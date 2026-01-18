@@ -11,6 +11,11 @@ build system.
 * Reading and writing to log files successfully.
 * Storage using map.
 * Rebuilding map based on log file.
+* Added basic TCP server
+  * Listens to port 9001 (hardcoded currently)
+  * Currently can accept commands and responds with `OK`
+  * `EXIT` command works to shut down the server
+  * Can be tested locally using `nc localhost 9001`
 * Performance improvements can be made to both.
 * Large scale tests are pending.
 
