@@ -10,13 +10,13 @@
 constexpr int PORT = 9001;
 constexpr int MAX_CONNECTIONS = 5;
 
+// commands list
+constexpr std::string_view command_exit("EXIT\n");
+
 int main() {
     std::cout << "Starting momoDB" << std::endl;
 
-    // initialize command strings
-    std::string_view command_exit("EXIT\n");
-
-    int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    const int server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd == -1) {
         std::cerr << "Could not create socket" << std::endl;
         return 1;
@@ -39,13 +39,14 @@ int main() {
     try {
         while (true) {
             int address_len = sizeof(address);
-            int client_socket = accept(server_fd, reinterpret_cast<sockaddr *>(&address), (socklen_t *) &address_len);
+            const int client_socket = accept(server_fd, reinterpret_cast<sockaddr *>(&address),
+                                       reinterpret_cast<socklen_t *>(&address_len));
             if (client_socket == -1) {
                 std::cerr << "Could not accept connection" << std::endl;
                 continue;
             }
-            char buffer[1024] = {0};
-            size_t chars_read = read(client_socket, buffer, 1024);
+            char buffer[1024] = {};
+            const size_t chars_read = read(client_socket, buffer, 1024);
             buffer[chars_read] = '\0'; // adding null just to be sure we have a delimiter
             if (chars_read > 0) {
                 std::string_view view{buffer};

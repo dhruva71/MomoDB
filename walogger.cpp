@@ -83,7 +83,7 @@ void WaLogger::printLog() const {
 }
 
 int WaLogger::addLogEntry(OpType optype, const std::string &key, const std::string &value) {
-    LogEntry log_entry = LogEntry(optype, key, value);
+    const auto log_entry = LogEntry(optype, key, value);
     logEntries.push_back(log_entry);
     return 0;
 }

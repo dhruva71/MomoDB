@@ -32,7 +32,7 @@ std::string keystore::get(const std::string &key) {
 }
 
 int keystore::del(const std::string &key) {
-    auto value = store.at(key);
+    const auto value = store.at(key);
     logger.addLogEntry(OpType::Delete, key, value);
     return store.erase(key);
 }

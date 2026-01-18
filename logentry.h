@@ -44,7 +44,7 @@ struct LogEntry {
 
     LogEntry(OpType optype, std::string key, std::string value) : optype(optype), key(std::move(key)),
                                                                    value(std::move(value)) {
-        auto now = std::chrono::system_clock::now();
+        const auto now = std::chrono::system_clock::now();
         timestamp = now.time_since_epoch().count();
     }
 
@@ -61,7 +61,7 @@ struct LogEntry {
             };
         });
 
-        std::vector segments(segments_view.begin(), segments_view.end());
+        const std::vector segments(segments_view.begin(), segments_view.end());
 
         std::cout << "Length of segments: " << segments.size() << std::endl;
         if (segments.empty()) {
