@@ -3,6 +3,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
+#include "CommandProcessor.h"
 #include "keystore.h"
 #include "walogger.h"
 
@@ -10,11 +11,16 @@
 constexpr int PORT = 9001;
 constexpr int MAX_CONNECTIONS = 5;
 
-// commands list
-constexpr std::string_view command_exit("EXIT\n");
+
 
 int main() {
     std::cout << "Starting momoDB" << std::endl;
+
+    WaLogger logger = WaLogger();
+    logger.loadLogFile("./sample.log");
+    keystore keystore(logger);
+    keystore.rebuildFromLog();
+    momodb::CommandProcessor command_processor(logger, keystore);
 
     const int server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd == -1) {
@@ -58,7 +64,8 @@ int main() {
                 // command processing
                 // TODO abstract this away
                 // TODO check if exit should possibly check for other open sockets as well
-                if (view == command_exit) {
+                auto execution_success = command_processor.parse_and_execute_command(view);
+                if (execution_success) {
                     std::cout << "Received exit command; shutting down." << std::endl;
                     close(client_socket);
                     break;

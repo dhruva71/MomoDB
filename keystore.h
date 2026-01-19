@@ -15,6 +15,7 @@ class keystore {
     WaLogger &logger;
 public:
     explicit keystore(WaLogger &);
+    keystore& operator=(const keystore &);
     ~keystore();
 
     int put(std::string key, std::string value);

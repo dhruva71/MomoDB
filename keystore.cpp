@@ -11,6 +11,14 @@ keystore::keystore(WaLogger &logger) : logger(logger) {
     logger.addLogEntry(OpType::Internal, "keystore", "created");
 }
 
+keystore & keystore::operator=(const keystore &other) {
+    if (this==&other) {
+        return *this;
+    }
+    logger=other.logger;
+    return *this;
+}
+
 keystore::~keystore() {
     store.clear();
     logger.addLogEntry(OpType::Delete, "keystore", "deleted");

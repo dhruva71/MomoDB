@@ -8,4 +8,6 @@ add_executable(momoDB main.cpp
         logentry.h
         walogger.cpp
         keystore.cpp
-        keystore.h)
+        keystore.h
+        CommandProcessor.cpp
+        CommandProcessor.h)
