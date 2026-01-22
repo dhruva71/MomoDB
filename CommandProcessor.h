@@ -20,7 +20,7 @@ namespace momodb {
 
         ~CommandProcessor();
 
-        int parse_and_execute_command(std::string_view command) const;
+        std::string_view parse_and_execute_command(std::string_view command) const;
     };
 } // momodb
 

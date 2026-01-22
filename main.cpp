@@ -11,7 +11,12 @@
 constexpr int PORT = 9001;
 constexpr int MAX_CONNECTIONS = 5;
 
-
+std::string_view trim(std::string_view input_string_view) {
+    const auto first = input_string_view.find_first_not_of(" \t\n\r");
+    if (first == std::string_view::npos) return "";
+    const auto last = input_string_view.find_last_not_of(" \t\n\r");
+    return input_string_view.substr(first, (last - first + 1));
+}
 
 int main() {
     std::cout << "Starting momoDB" << std::endl;
@@ -55,20 +60,20 @@ int main() {
             const size_t chars_read = read(client_socket, buffer, 1024);
             buffer[chars_read] = '\0'; // adding null just to be sure we have a delimiter
             if (chars_read > 0) {
-                std::string_view view{buffer};
+                std::string_view untrimmed_view{buffer};
+                auto view = trim(untrimmed_view);
+                // TODO make this appear only in debug mode
                 std::cout << "Received message: <" << view << "> of length " << view.length() << std::endl;
 
-                std::string response = "OK";
-                send(client_socket, response.data(), response.length(), 0);
-
                 // command processing
-                // TODO abstract this away
                 // TODO check if exit should possibly check for other open sockets as well
                 auto execution_success = command_processor.parse_and_execute_command(view);
-                if (execution_success) {
+                if (execution_success=="EXIT") {
                     std::cout << "Received exit command; shutting down." << std::endl;
                     close(client_socket);
                     break;
+                } else {
+                    send(client_socket, execution_success.data(), execution_success.length(), 0);
                 }
             } else {
                 std::cerr << "Connection closed" << std::endl;

@@ -26,11 +26,21 @@ keystore::~keystore() {
 
 int keystore::put(std::string key, std::string value) {
     logger.addLogEntry(OpType::Put, key, value);
-    store.insert({key, value});
-
-    const auto display_string = std::format("Inserted {}:{} in store", key, value);
-    std::cout << display_string;
-    return 0;
+    // return type of store.insert should look like (source: https://en.cppreference.com/w/cpp/container/map.html)
+    // {
+    //     Iter     position;
+    //     bool     inserted;
+    //     NodeType node;
+    // };
+    auto insert_return = store.insert({key, value});
+    if (insert_return.second) {
+        logger.addLogEntry(OpType::Internal, "Put", "Success");
+        return 0;
+    } else {
+        const auto display_string = std::format("Inserted {}:{} in store", key, value);
+        std::cout << display_string;
+        return 1;
+    }
 }
 
 std::string keystore::get(const std::string &key) {

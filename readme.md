@@ -16,8 +16,10 @@ build system.
     * You can find processes using 9001 already using `sudo ss -tulnp | grep :9001`
   * Currently, can accept commands and responds with `OK`
   * `EXIT` command works to shut down the server
+  * `SET`, `GET` work
+  * `DEL` has an issue
   * Can be tested locally using `nc localhost 9001`
-* Performance improvements can be made to both.
+* Performance improvements can be made to a lot of aspects.
 * Large scale tests are pending.
 
 ## Log format
