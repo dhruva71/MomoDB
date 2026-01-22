@@ -21,9 +21,13 @@
     * `GET version_json` -> returns `{"version:"1"}`
   * `DEL` has an issue and does not work currently
   * Can be tested locally using `nc localhost 9001`
+
+## TODOs
 * Performance improvements can be made to a lot of aspects.
 * Large scale tests are pending.
 * Unit tests are pending.
+* Better data structures and writing methods.
+* Better network protocol is needed.
 
 ## Log format
 For human readability and easier debugging, logs are plain-text only for now. They will be moved to a binary format once
