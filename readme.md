@@ -1,11 +1,11 @@
 # MomoDB
-**WIP**
+**Work in progress**
 
 ![Logo created using Nano Banana](logo.png)
 
-A key-value store, created purely for educational purposes.
-Built in C++. This is making use of C++20 features, so you will need a modern compiler to build this. It also uses CMake
-build system.
+* A **key-value store**, created purely for educational purposes.
+* Built in C++. This is making use of C++20 features, so you will need a modern compiler to build this.
+* Named after [Momo (Wikipedia)](https://en.wikipedia.org/wiki/Momo_(food))
 
 ## Current capabilities
 * Reading and writing to log files successfully.
@@ -17,10 +17,13 @@ build system.
   * Currently, can accept commands and responds with `OK`
   * `EXIT` command works to shut down the server
   * `SET`, `GET` work
-  * `DEL` has an issue
+    * `SET version_json {"version:"1"}` -> sets value `{"version:"1"}` for key `version`
+    * `GET version_json` -> returns `{"version:"1"}`
+  * `DEL` has an issue and does not work currently
   * Can be tested locally using `nc localhost 9001`
 * Performance improvements can be made to a lot of aspects.
 * Large scale tests are pending.
+* Unit tests are pending.
 
 ## Log format
 For human readability and easier debugging, logs are plain-text only for now. They will be moved to a binary format once
