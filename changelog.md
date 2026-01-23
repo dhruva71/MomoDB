@@ -21,3 +21,4 @@
   * should've used `insert_or_assign`, instead of `insert`
 * Renamed `Put` to `Set` for better uniformity
 * Improved insertion return logic
+* Improved deletion logic

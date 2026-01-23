@@ -19,7 +19,7 @@
   * `SET`, `GET` work
     * `SET version_json {"version:"1"}` -> sets value `{"version:"1"}` for key `version`
     * `GET version_json` -> returns `{"version:"1"}`
-  * `DEL` has an issue and does not work currently
+  * `DEL` works by overwriting the value with `<deleted>`
   * Can be tested locally using `nc localhost 9001`
 
 ## TODOs
