@@ -7,6 +7,10 @@
 * Built in C++. This is making use of C++20 features, so you will need a modern compiler to build this.
 * Named after [Momo (Wikipedia)](https://en.wikipedia.org/wiki/Momo_(food))
 
+## Commands
+* `SET <key> <value>`: holds value `<value>` against key `<key>`
+* `GET <key>`: returns value 
+
 ## Current capabilities
 * Reading and writing to log files successfully.
 * Storage using map.
