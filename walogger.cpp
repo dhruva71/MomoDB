@@ -100,6 +100,7 @@ int WaLogger::addLogEntry(OpType optype, const std::string &key, const std::stri
     logEntries.push_back(log_entry);
     if (fileStream.is_open()) {
         fileStream << log_entry.toString() << std::endl;
+        fileStream.flush();
     } else {
         std::cerr << "Error opening log file " << logFileName << std::endl;
     }

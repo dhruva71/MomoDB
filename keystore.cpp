@@ -77,6 +77,7 @@ void keystore::printKeystore() {
 
 int keystore::rebuildFromLog() {
     auto logEntries = logger.getLogEntries();
+    bool didModifyStore = false;
     for (const auto &entry: logEntries) {
         auto optype = entry.optype;
         switch (optype) {
@@ -84,17 +85,21 @@ int keystore::rebuildFromLog() {
                 auto key = entry.key;
                 auto value = entry.value;
                 this->set(key, value, false);
+                didModifyStore = true;
                 break;
             }
             case OpType::Internal:
                 break;
             case OpType::Delete:
                 this->del(entry.key, false);
+                didModifyStore = true;
                 break;
             case OpType::Get:
                 break;
         }
     }
-    logger.addLogEntry(OpType::Internal, "keystore", "rebuilt");
+    if (didModifyStore) {
+        logger.addLogEntry(OpType::Internal, "keystore", "rebuilt");
+    }
     return 0;
 }
