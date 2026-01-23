@@ -45,10 +45,14 @@ std::string keystore::get(const std::string &key) {
     return value;
 }
 
+// returns 0 for success
 int keystore::del(const std::string &key) {
-    const auto value = store.at(key);
+    // const auto value = store.at(key);
+    // overwrite the value
+    auto value = "<deleted>";
+    auto insert_return = store.insert_or_assign(key, value);
     logger.addLogEntry(OpType::Delete, key, value);
-    return store.erase(key);
+    return 0;
 }
 
 void keystore::printKeystore() {
