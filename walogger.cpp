@@ -53,7 +53,7 @@ void WaLogger::saveLogFile() const {
         fileStream << entry.toString() << std::endl;
     }
     fileStream.close();
-    std::cout << "Saved log file" << std::endl;
+    std::cout << "\nSaved log file" << std::endl;
 }
 
 void WaLogger::saveLogFile(const std::string &logFilePath) {

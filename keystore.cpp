@@ -11,11 +11,11 @@ keystore::keystore(WaLogger &logger) : logger(logger) {
     logger.addLogEntry(OpType::Internal, "keystore", "created");
 }
 
-keystore & keystore::operator=(const keystore &other) {
-    if (this==&other) {
+keystore &keystore::operator=(const keystore &other) {
+    if (this == &other) {
         return *this;
     }
-    logger=other.logger;
+    logger = other.logger;
     return *this;
 }
 
@@ -24,23 +24,19 @@ keystore::~keystore() {
     logger.addLogEntry(OpType::Delete, "keystore", "deleted");
 }
 
-int keystore::put(std::string key, std::string value) {
-    logger.addLogEntry(OpType::Put, key, value);
-    // return type of store.insert should look like (source: https://en.cppreference.com/w/cpp/container/map.html)
+int keystore::set(const std::string &key, std::string value) {
+    logger.addLogEntry(OpType::Set, key, value);
+    // return type of store.insert_or_assign should look like (source: https://en.cppreference.com/w/cpp/container/map.html)
     // {
     //     Iter     position;
     //     bool     inserted;
     //     NodeType node;
     // };
-    auto insert_return = store.insert({key, value});
+    auto insert_return = store.insert_or_assign(key, value);
     if (insert_return.second) {
         logger.addLogEntry(OpType::Internal, "Put", "Success");
-        return 0;
-    } else {
-        const auto display_string = std::format("Inserted {}:{} in store", key, value);
-        std::cout << display_string;
-        return 1;
     }
+    return 0;
 }
 
 std::string keystore::get(const std::string &key) {
@@ -68,7 +64,7 @@ int keystore::rebuildFromLog() {
     for (const auto &entry: logEntries) {
         auto optype = entry.optype;
         switch (optype) {
-            case OpType::Put: {
+            case OpType::Set: {
                 auto key = entry.key;
                 auto value = entry.value;
                 store.insert({key, value});

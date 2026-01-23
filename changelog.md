@@ -15,3 +15,9 @@
   * more improvements can be made
 * Command parsing works for `EXIT`, `SET`, and `GET`
   * `DEL` needs work
+
+# 2026-01-23
+* Fixed a bug with map insertion
+  * should've used `insert_or_assign`, instead of `insert`
+* Renamed `Put` to `Set` for better uniformity
+* Improved insertion return logic

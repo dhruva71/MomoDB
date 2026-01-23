@@ -30,8 +30,7 @@ namespace momodb {
         auto command_segment = command_view.substr(0, first_space_pos);
         const auto second_space_pos = command_view.find(' ', first_space_pos + 1);
         auto key_segment = command_view.substr(first_space_pos + 1, second_space_pos - first_space_pos - 1);
-        const auto last_pos = command_view[command_view.length()]=='\n' ? command_view.length()-1 : command_view.length();
-        auto value_segment = command_view.substr(second_space_pos + 1, last_pos);
+        auto value_segment = command_view.substr(second_space_pos + 1, command_view.length());
 
         // TODO add toggle for debug prints
         // auto debug_str = std::format("Command={}\n Key={}\n Value={}; First space at {}, second space at {}", command_segment, key_segment, value_segment, first_space_pos, second_space_pos);
@@ -46,7 +45,7 @@ namespace momodb {
         }
         if (command_segment == command_set) {
             logger->addLogEntry(OpType::Internal, "CommandProcessor", "Set");
-            auto return_value = store->put(std::string(key_segment), std::string(value_segment));
+            auto return_value = store->set(std::string(key_segment), std::string(value_segment));
             logger->saveLogFile();
             if (return_value==0) {
                 return {"OK"};
