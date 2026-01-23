@@ -26,3 +26,5 @@
   * now it actually works like a streaming WAL
 * Fix logic for rebuilding from log
 * Store functions now support a boolean flag on whether they should write to log or not
+* Improved flushing WAL to disk
+* Improved logging to indicate when keystore was actually rebuilt from WAL
