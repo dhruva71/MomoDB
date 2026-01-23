@@ -40,13 +40,11 @@ namespace momodb {
 
         if (command_view == command_exit) {
             logger->addLogEntry(OpType::Internal, "CommandProcessor", "Exited");
-            logger->saveLogFile();
             return {"EXIT"};
         }
         if (command_segment == command_set) {
             logger->addLogEntry(OpType::Internal, "CommandProcessor", "Set");
             auto return_value = store->set(std::string(key_segment), std::string(value_segment));
-            logger->saveLogFile();
             if (return_value==0) {
                 return {"OK"};
             } else {
@@ -55,16 +53,14 @@ namespace momodb {
         }
         if (command_segment == command_get) {
             logger->addLogEntry(OpType::Internal, "CommandProcessor", "Get");
-            auto value = store->get(std::string(key_segment));
-            logger->saveLogFile();
+            auto value = store->get(std::string(key_segment), true);
 
             // TODO inspect this
             return value;
         }
         if (command_segment == command_del) {
             logger->addLogEntry(OpType::Internal, "CommandProcessor", "Delete");
-            auto return_value = store->del(std::string(key_segment));
-            logger->saveLogFile();
+            auto return_value = store->del(std::string(key_segment), true);
 
             if (return_value==0) {
                 return {"OK"};
@@ -73,7 +69,6 @@ namespace momodb {
             }
         }
         logger->addLogEntry(OpType::Internal, "CommandProcessor", std::format("Parsing failed for {}", command_view));
-        logger->saveLogFile();
         return {"ERROR"};
     }
 } // momodb

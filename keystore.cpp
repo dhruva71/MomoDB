@@ -24,8 +24,10 @@ keystore::~keystore() {
     logger.addLogEntry(OpType::Delete, "keystore", "deleted");
 }
 
-int keystore::set(const std::string &key, std::string value) {
-    logger.addLogEntry(OpType::Set, key, value);
+int keystore::set(const std::string &key, std::string value, bool shouldLog) {
+    if (shouldLog) {
+        logger.addLogEntry(OpType::Set, key, value);
+    }
     // return type of store.insert_or_assign should look like (source: https://en.cppreference.com/w/cpp/container/map.html)
     // {
     //     Iter     position;
@@ -34,24 +36,34 @@ int keystore::set(const std::string &key, std::string value) {
     // };
     auto insert_return = store.insert_or_assign(key, value);
     if (insert_return.second) {
-        logger.addLogEntry(OpType::Internal, "Put", "Success");
+        if (shouldLog) {
+            logger.addLogEntry(OpType::Internal, "Put", "Success");
+        }
     }
     return 0;
 }
 
-std::string keystore::get(const std::string &key) {
-    auto value = store.at(key);
-    logger.addLogEntry(OpType::Get, key, value);
-    return value;
+std::string keystore::get(const std::string &key, bool shouldLog) {
+    try {
+        auto value = store.at(key);
+        if (shouldLog) {
+            logger.addLogEntry(OpType::Get, key, value);
+        }
+        return value;
+    } catch (const std::out_of_range &e) {
+        return "";
+    }
 }
 
 // returns 0 for success
-int keystore::del(const std::string &key) {
+int keystore::del(const std::string &key, bool shouldLog) {
     // const auto value = store.at(key);
     // overwrite the value
-    auto value = "<deleted>";
+    auto value = "";
     auto insert_return = store.insert_or_assign(key, value);
-    logger.addLogEntry(OpType::Delete, key, value);
+    if (shouldLog) {
+        logger.addLogEntry(OpType::Delete, key, value);
+    }
     return 0;
 }
 
@@ -71,17 +83,18 @@ int keystore::rebuildFromLog() {
             case OpType::Set: {
                 auto key = entry.key;
                 auto value = entry.value;
-                store.insert({key, value});
+                this->set(key, value, false);
                 break;
             }
             case OpType::Internal:
                 break;
             case OpType::Delete:
-                store.erase(entry.key);
+                this->del(entry.key, false);
                 break;
             case OpType::Get:
                 break;
         }
     }
+    logger.addLogEntry(OpType::Internal, "keystore", "rebuilt");
     return 0;
 }

@@ -22,3 +22,7 @@
 * Renamed `Put` to `Set` for better uniformity
 * Improved insertion return logic
 * Improved deletion logic
+* Improved log writing
+  * now it actually works like a streaming WAL
+* Fix logic for rebuilding from log
+* Store functions now support a boolean flag on whether they should write to log or not

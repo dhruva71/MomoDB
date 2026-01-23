@@ -22,7 +22,7 @@ int main() {
     std::cout << "Starting momoDB" << std::endl;
 
     WaLogger logger = WaLogger();
-    logger.loadLogFile("./sample.log");
+    logger.loadLogFile("./momodb.log");
     keystore keystore(logger);
     keystore.rebuildFromLog();
     momodb::CommandProcessor command_processor(logger, keystore);
@@ -51,7 +51,7 @@ int main() {
         while (true) {
             int address_len = sizeof(address);
             const int client_socket = accept(server_fd, reinterpret_cast<sockaddr *>(&address),
-                                       reinterpret_cast<socklen_t *>(&address_len));
+                                             reinterpret_cast<socklen_t *>(&address_len));
             if (client_socket == -1) {
                 std::cerr << "Could not accept connection" << std::endl;
                 continue;
@@ -68,12 +68,11 @@ int main() {
                 // command processing
                 // TODO check if exit should possibly check for other open sockets as well
                 auto execution_success = command_processor.parse_and_execute_command(view);
-                if (execution_success=="EXIT") {
+                send(client_socket, execution_success.data(), execution_success.length(), 0);
+                if (execution_success == "EXIT") {
                     std::cout << "Received exit command; shutting down." << std::endl;
                     close(client_socket);
                     break;
-                } else {
-                    send(client_socket, execution_success.data(), execution_success.length(), 0);
                 }
             } else {
                 std::cerr << "Connection closed" << std::endl;

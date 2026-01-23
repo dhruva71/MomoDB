@@ -6,15 +6,19 @@
 #define MOMODB_WALOGGER_H
 #include <string>
 #include <vector>
+#include <fstream>
 
 #include "logentry.h"
 
 class WaLogger {
     std::vector<LogEntry> logEntries;
-    std::string logFileName;
+    std::string logFileName = "momodb.log";
+    std::ofstream fileStream;
+
 public:
     WaLogger();
     ~WaLogger();
+    WaLogger& operator=(const WaLogger& other);
 
     int loadLogFile(const std::string &logFilePath);
     void saveLogFile() const;

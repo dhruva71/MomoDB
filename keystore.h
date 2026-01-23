@@ -18,9 +18,9 @@ public:
     keystore& operator=(const keystore &);
     ~keystore();
 
-    int set(const std::string &key, std::string value);
-    std::string get(const std::string &key);
-    int del(const std::string& key);
+    int set(const std::string &key, std::string value, bool shouldLog = true);
+    std::string get(const std::string &key, bool shouldLog = true);
+    int del(const std::string &key, bool shouldLog=true);
 
     void printKeystore();
     int rebuildFromLog();

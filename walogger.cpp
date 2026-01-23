@@ -10,16 +10,29 @@
 WaLogger::WaLogger() {
     // logEntries = std::vector<LogEntry>();
     logEntries.push_back(std::move(LogEntry(OpType::Internal, "Created", "WaLogger")));
+    fileStream.open(logFileName, std::ios::app);
 }
 
 WaLogger::~WaLogger() {
     logEntries.push_back(std::move(LogEntry(OpType::Internal, "Destroyed", "WaLogger")));
-    this->saveLogFile(this->logFileName);
+    // this->saveLogFile(this->logFileName);
+    fileStream.close();
+}
+
+WaLogger & WaLogger::operator=(const WaLogger &other) {
+    if (this != &other) {
+        return *this;
+    }
+    logFileName = other.logFileName;
+    logEntries = other.logEntries;
+    fileStream.close();
+    fileStream.open(other.logFileName, std::ios::app);
+    return *this;
 }
 
 int WaLogger::loadLogFile(const std::string &logFilePath) {
-    std::ifstream fileStream(logFilePath);
-    if (!fileStream.is_open()) {
+    std::ifstream readFileStream(logFileName);
+    if (!readFileStream.is_open()) {
         std::cerr << "Error opening log file " << logFilePath << std::endl;
         return 1;
     }
@@ -27,14 +40,14 @@ int WaLogger::loadLogFile(const std::string &logFilePath) {
     // update logger's logFileName, since we have a successful load now
     logFileName = logFilePath;
 
-    while (!fileStream.eof()) {
+    while (!readFileStream.eof()) {
         std::string line;
-        std::getline(fileStream, line);
+        std::getline(readFileStream, line);
         if (!line.empty()) {
             logEntries.push_back(std::move(LogEntry(line)));
         }
     }
-    fileStream.close();
+    readFileStream.close();
 
     // display log entries
     for (auto &entry: logEntries) {
@@ -45,14 +58,14 @@ int WaLogger::loadLogFile(const std::string &logFilePath) {
 }
 
 void WaLogger::saveLogFile() const {
-    std::ofstream fileStream(logFileName);
-    if (!fileStream.is_open()) {
+    std::ofstream outfileStream(logFileName);
+    if (!outfileStream.is_open()) {
         std::cerr << "Error opening log file " << logFileName << std::endl;
     }
     for (auto &entry: logEntries) {
-        fileStream << entry.toString() << std::endl;
+        outfileStream << entry.toString() << std::endl;
     }
-    fileStream.close();
+    outfileStream.close();
     std::cout << "\nSaved log file" << std::endl;
 }
 
@@ -85,6 +98,11 @@ void WaLogger::printLog() const {
 int WaLogger::addLogEntry(OpType optype, const std::string &key, const std::string &value) {
     const auto log_entry = LogEntry(optype, key, value);
     logEntries.push_back(log_entry);
+    if (fileStream.is_open()) {
+        fileStream << log_entry.toString() << std::endl;
+    } else {
+        std::cerr << "Error opening log file " << logFileName << std::endl;
+    }
     return 0;
 }
 

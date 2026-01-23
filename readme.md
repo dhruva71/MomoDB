@@ -10,6 +10,7 @@
 ## Commands
 * `SET <key> <value>`: holds value `<value>` against key `<key>`
 * `GET <key>`: returns value 
+* `DEL <key>`: deletes a key; essentially marks it as <deleted>
 
 ## Current capabilities
 * Reading and writing to log files successfully.
@@ -21,9 +22,7 @@
   * Currently, can accept commands and responds with `OK`
   * `EXIT` command works to shut down the server
   * `SET`, `GET` work
-    * `SET version_json {"version:"1"}` -> sets value `{"version:"1"}` for key `version`
-    * `GET version_json` -> returns `{"version:"1"}`
-  * `DEL` works by overwriting the value with `<deleted>`
+  * `DEL` works by overwriting the value with an empty string.
   * Can be tested locally using `nc localhost 9001`
 
 ## TODOs
@@ -32,6 +31,10 @@
 * Unit tests are pending.
 * Better data structures and writing methods.
 * Better network protocol is needed.
+
+## Known issues
+* JSON values cause issues, since they have a `:`
+  * switching to a newer format is required
 
 ## Log format
 For human readability and easier debugging, logs are plain-text only for now. They will be moved to a binary format once
