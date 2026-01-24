@@ -24,6 +24,12 @@
   * `SET`, `GET` work
   * `DEL` works by overwriting the value with an empty string.
   * Can be tested locally using `nc localhost 9001`
+* Current performance (based on a toy script acting as a client):
+```text
+Successfully completed: 10000/10000
+Total time: 1.07 seconds
+Performance: 9347.80 operations/sec
+```
 
 ## TODOs
 * Performance improvements can be made to a lot of aspects.
