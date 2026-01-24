@@ -28,3 +28,10 @@
 * Store functions now support a boolean flag on whether they should write to log or not
 * Improved flushing WAL to disk
 * Improved logging to indicate when keystore was actually rebuilt from WAL
+
+# 2026-01-24
+* Switched from `map` to `unordered_map`
+  * Average time complexity of `map` is O(log n), whearas `unordered_map` is O(1)
+  * Worst case performance of `unordered_map` is O(n)
+  * `unordered_map` does take more memory than `map`
+  * Better comparision [here at Stack Overflow](https://stackoverflow.com/questions/2196995/is-there-any-advantage-of-using-map-over-unordered-map-in-case-of-trivial-keys)

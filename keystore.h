@@ -7,11 +7,12 @@
 
 #include <map>
 #include <string>
+#include <unordered_map>
 
 #include "walogger.h"
 
 class keystore {
-    std::map<std::string, std::string> store;
+    std::unordered_map<std::string, std::string> store;
     WaLogger &logger;
 public:
     explicit keystore(WaLogger &);

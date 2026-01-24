@@ -46,6 +46,7 @@
   * Currently hitting limits
 * Improving internal data structures.
   * `map` was a good start, but better data structures exist.
+  * Switched to using `unordered_map` currently
 
 ## Log format
 For human readability and easier debugging, logs are plain-text only for now. They will be moved to a binary format once
