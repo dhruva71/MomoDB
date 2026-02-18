@@ -56,28 +56,31 @@ int main() {
                 std::cerr << "Could not accept connection" << std::endl;
                 continue;
             }
-            char buffer[1024] = {};
-            const size_t chars_read = read(client_socket, buffer, 1024);
-            buffer[chars_read] = '\0'; // adding null just to be sure we have a delimiter
-            if (chars_read > 0) {
-                std::string_view untrimmed_view{buffer};
-                auto view = trim(untrimmed_view);
-                // TODO make this appear only in debug mode
-                std::cout << "Received message: <" << view << "> of length " << view.length() << std::endl;
 
-                // command processing
-                // TODO check if exit should possibly check for other open sockets as well
-                auto execution_success = command_processor.parse_and_execute_command(view);
-                send(client_socket, execution_success.data(), execution_success.length(), 0);
-                if (execution_success == "EXIT") {
-                    std::cout << "Received exit command; shutting down." << std::endl;
-                    close(client_socket);
-                    break;
+            // we have accepted a connection, so now we are free to process requests
+            // we now loop and listen to incoming messages
+            while (true) {
+                char buffer[1024] = {};
+                const size_t chars_read = read(client_socket, buffer, 1024);
+                buffer[chars_read] = '\0'; // adding null just to be sure we have a delimiter
+                if (chars_read > 0) {
+                    std::string_view untrimmed_view{buffer};
+                    auto view = trim(untrimmed_view);
+                    // TODO make this appear only in debug mode
+                    std::cout << "Received message: <" << view << "> of length " << view.length() << std::endl;
+
+                    // command processing
+                    // TODO check if exit should possibly check for other open sockets as well
+                    auto execution_success = command_processor.parse_and_execute_command(view);
+                    send(client_socket, execution_success.data(), execution_success.length(), 0);
+                    if (execution_success == "EXIT") {
+                        std::cout << "Received exit command; closing connection." << std::endl;
+                        break;
+                    }
+                } else {
+                    std::cerr << "Connection closed" << std::endl;
                 }
-            } else {
-                std::cerr << "Connection closed" << std::endl;
             }
-
             close(client_socket);
         }
     } catch (std::exception &e) {

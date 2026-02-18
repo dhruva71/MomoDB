@@ -24,11 +24,17 @@
   * `SET`, `GET` work
   * `DEL` works by overwriting the value with an empty string.
   * Can be tested locally using `nc localhost 9001`
-* Current performance (based on a toy script acting as a client):
+* Current performance (based on a toy script acting as a client) in a single thread, with connections being closed after every request:
 ```text
 Successfully completed: 10000/10000
 Total time: 1.07 seconds
 Performance: 9347.80 operations/sec
+```
+* In single-client persistent client mode i.e a client connects and stays connected, we get (please note that the number of operations has been increased to 100K, but it should not matter much):
+```text
+Successfully completed: 100000/100000
+Total time: 3.66 seconds
+Performance: 27290.68 operations/sec
 ```
 
 ## TODOs
