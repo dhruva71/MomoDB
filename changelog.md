@@ -35,3 +35,7 @@
   * Worst case performance of `unordered_map` is O(n)
   * `unordered_map` does take more memory than `map`
   * Better comparision [here at Stack Overflow](https://stackoverflow.com/questions/2196995/is-there-any-advantage-of-using-map-over-unordered-map-in-case-of-trivial-keys)
+
+# 2026-02-18
+* Added single-client persistence mode; performance bumped to 27k requests/sec
+* Improved socket binding logic to avoid port conflicts. The server had issues binding to port 9001 if restarted quickly.

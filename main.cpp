@@ -34,6 +34,18 @@ int main() {
     }
     std::cout << "Socket created successfully: " << server_fd << std::endl;
 
+    // set address to be reusable
+    int reuse = 1;
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse)) == -1) {
+        std::cerr << "Could not set socket address to be reusable" << std::endl;
+        return 1;
+    }
+    // and port as well
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse)) == -1) {
+        std::cerr << "Could not set socket port to be reusable" << std::endl;
+        return 1;
+    }
+
     sockaddr_in address{.sin_family = AF_INET, .sin_port = htons(PORT)}; // host to network short
     address.sin_addr.s_addr = htonl(INADDR_ANY);
     if (bind(server_fd, reinterpret_cast<sockaddr *>(&address), sizeof(address)) == -1) {
