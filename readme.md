@@ -48,7 +48,12 @@ Successfully completed: 100000/100000
 Total time: 2.63 seconds
 Performance: 38078.49 operations/sec
 ```
-
+* Release build + jemalloc + no loggings gives:
+```text
+Successfully completed: 100000/100000
+Total time: 2.07 seconds
+Performance: 48425.44 operations/sec
+```
 
 ## TODOs
 * Performance improvements can be made to a lot of aspects.
