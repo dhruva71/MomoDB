@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 4.1)
 project(momoDB)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+
+# jemalloc
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(JEMALLOC REQUIRED jemalloc)
+include_directories(${JEMALLOC_INCLUDE_DIRS})
 
 add_executable(momoDB main.cpp
         walogger.h
@@ -11,3 +17,5 @@ add_executable(momoDB main.cpp
         keystore.h
         CommandProcessor.cpp
         CommandProcessor.h)
+
+target_link_libraries(momoDB ${JEMALLOC_LIBRARIES})

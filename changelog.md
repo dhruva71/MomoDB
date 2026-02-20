@@ -39,3 +39,5 @@
 # 2026-02-18
 * Added single-client persistence mode; performance bumped to 27k requests/sec
 * Improved socket binding logic to avoid port conflicts. The server had issues binding to port 9001 if restarted quickly.
+* Switched to release build for testing purposes.
+* Testing using `jemalloc`
