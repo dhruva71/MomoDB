@@ -31,6 +31,11 @@ Total time: 1.07 seconds
 Performance: 9347.80 operations/sec
 ```
 
+## Branches
+* `master`: Primary branch.
+* `single-client`: Branch for testing single client persistence and performance.
+* `v0.1`: version 0.1 of MomoDB. It closes connections after every request. Not recommended for production use, but kept as a reference.
+
 ## TODOs
 * Performance improvements can be made to a lot of aspects.
 * Large scale tests are pending.
