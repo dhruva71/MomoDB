@@ -32,6 +32,12 @@ Successfully completed: 10000/10000
 Total time: 1.07 seconds
 Performance: 9347.80 operations/sec
 ```
+* Switching to release build gives (note the switch to 100k operations; it should not matter much since we are primarily comparing operations/sec):
+```text
+Successfully completed: 100000/100000
+Total time: 8.73 seconds
+Performance: 11458.47 operations/sec
+```
 * In single-client persistent client mode i.e a client connects and stays connected, we get (please note that the number of operations has been increased to 100K, but it should not matter much) (debug build):
 ```text
 Successfully completed: 100000/100000
@@ -61,6 +67,12 @@ Performance: 48425.44 operations/sec
 Successfully completed: 100000/100000
 Total time: 1.79 seconds
 Performance: 55745.68 operations/sec
+```
+* Release build (O3) + jemalloc + no logging + stdout disabled + persistent single client mode gives:
+```text
+Successfully completed: 100000/100000
+Total time: 1.66 seconds
+Performance: 60321.11 operations/sec
 ```
 
 ## TODOs
