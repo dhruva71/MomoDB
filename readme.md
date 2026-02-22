@@ -24,6 +24,8 @@
   * `SET`, `GET` work
   * `DEL` works by overwriting the value with an empty string.
   * Can be tested locally using `nc localhost 9001`
+
+### Performance
 * Current performance (based on a toy script acting as a client) in a single thread, with connections being closed after every request (debug build):
 ```text
 Successfully completed: 10000/10000
