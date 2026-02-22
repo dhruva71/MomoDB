@@ -38,23 +38,29 @@ Successfully completed: 100000/100000
 Total time: 3.66 seconds
 Performance: 27290.68 operations/sec
 ```
-* Switching to release build gives:
+* Switching to release build + persistent single client mode gives:
 ```text
 Successfully completed: 100000/100000
 Total time: 2.72 seconds
 Performance: 36751.67 operations/sec
 ```
-* Switching to release build + jemalloc gives:
+* Switching to release build + jemalloc + persistent single client mode gives:
 ```text
 Successfully completed: 100000/100000
 Total time: 2.63 seconds
 Performance: 38078.49 operations/sec
 ```
-* Release build + jemalloc + no loggings gives:
+* Release build + jemalloc + no logging + persistent single client mode gives:
 ```text
 Successfully completed: 100000/100000
 Total time: 2.07 seconds
 Performance: 48425.44 operations/sec
+```
+* Release build + jemalloc + no logging + stdout disabled + persistent client mode gives:
+```text
+Successfully completed: 100000/100000
+Total time: 1.79 seconds
+Performance: 55745.68 operations/sec
 ```
 
 ## TODOs
